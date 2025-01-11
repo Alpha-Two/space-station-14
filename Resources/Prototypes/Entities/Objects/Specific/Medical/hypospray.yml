@@ -509,7 +509,6 @@
   name: pen
   suffix: Hypopen
   parent: Pen # It is just like normal pen, isn't it?
-  description: A dark ink pen.
   id: Hypopen
   components:
   - type: SolutionContainerManager
@@ -544,5 +543,46 @@
   - type: SpawnItemsOnUse
     items:
     - id: Hypopen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  name: rainbow crayon
+  suffix: Hypocrayon
+  parent: CrayonRainbow
+  id: Hypocrayon
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 10
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+    heldOnly: true # Allow examination only when held in hand.
+  - type: Hypospray
+    onlyAffectsMobs: false
+  - type: UseDelay
+    delay: 0.5
+  - type: StaticPrice
+    price: 75
+  - type: EmitSoundOnUse
+    handle: false # don't want the sound to stop the self-inject from triggering
+
+- type: entity
+  parent: [ BaseItem, BaseSyndicateContraband ]
+  id: HypocrayonBox
+  name: hypocrayon box
+  description: A small box containing a hypocrayon. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Storage/penbox.rsi
+    state: hypopen
+  - type: SpawnItemsOnUse
+    items:
+    - id: Hypocrayon
     sound:
       path: /Audio/Effects/unwrap.ogg
