@@ -30,6 +30,12 @@ namespace Content.Server.Shuttles.Components
         [ViewVariables(VVAccess.ReadWrite), DataField("highlightedRadarColor")]
         public Color HighlightedRadarColor = Color.Magenta;
 
+        [DataField]
+        public string DockType = "airlock";
+
+        [DataField]
+        public HashSet<string> DocksWith = new HashSet<string>() { "airlock" };
+
         [ViewVariables]
         public int PathfindHandle = -1;
     }

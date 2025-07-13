@@ -1,3 +1,4 @@
+using Content.Shared.NodeContainer.NodeGroups;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power
@@ -30,5 +31,12 @@ namespace Content.Shared.Power
         HighVoltage,
         MediumVoltage,
         Apc,
+    }
+
+    public enum Voltage
+    {
+        High = NodeGroupID.HVPower,
+        Medium = NodeGroupID.MVPower,
+        Apc = NodeGroupID.Apc,
     }
 }

@@ -55,19 +55,19 @@ public sealed partial class ElectrifiedComponent : Component
     public bool UsesApcPower = false;
 
     /// <summary>
-    /// Identifier for the high voltage node.
+    /// Identifier for the high newVoltage node.
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? HighVoltageNode;
 
     /// <summary>
-    /// Identifier for the medium voltage node.
+    /// Identifier for the medium newVoltage node.
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? MediumVoltageNode;
 
     /// <summary>
-    /// Identifier for the low voltage node.
+    /// Identifier for the low newVoltage node.
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? LowVoltageNode;

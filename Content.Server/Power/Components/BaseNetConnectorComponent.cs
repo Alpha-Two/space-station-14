@@ -4,6 +4,7 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.Power;
 
 namespace Content.Server.Power.Components
 {
@@ -24,7 +25,7 @@ namespace Content.Server.Power.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public Voltage Voltage { get => _voltage; set => SetVoltage(value); }
-        [DataField("voltage")]
+        [DataField("newVoltage")]
         private Voltage _voltage = Voltage.High;
 
         [ViewVariables]
@@ -95,10 +96,5 @@ namespace Content.Server.Power.Components
         }
     }
 
-    public enum Voltage
-    {
-        High = NodeGroupID.HVPower,
-        Medium = NodeGroupID.MVPower,
-        Apc = NodeGroupID.Apc,
-    }
+
 }

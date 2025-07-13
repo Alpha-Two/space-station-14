@@ -1,0 +1,82 @@
+﻿- type: entity
+  id: UtilitiesDock
+  parent: BaseStructure
+  name: utilities dock
+  description: Used for powering shuttles and stations.
+  components:
+  - type: Docking
+    radarColor: "#008888"
+    highlightedRadarColor: "#00FFFF"
+    dockType: utilities
+    docksWith: [ "utilities" ]
+  - type: DockingSignalControl
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - AirlockLayer
+      docking:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+          position: "0,-0.5"
+        hard: false
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/shuttle.rsi
+    state: closed
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+  - type: Transform
+  - type: Battery
+    startingCharge: 0
+    maxCharge: 50000
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      HVNode:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      MVNode:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+      LVNode:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+  - type: BatteryCharger
+    voltage: Medium
+    node: MVNode
+  - type: BatteryDischarger
+    voltage: Medium
+    node: MVNode
+  - type: PowerNetworkBattery
+    maxSupply: 10000
+    maxChargeRate: 5000
+    supplyRampTolerance: 1000
+    supplyRampRate: 500
+  - type: ExaminableBattery
+  - type: DockingPowerSharer
+    powerSharerTypes:
+    - Apc:
+        node: LVNode
+    - Medium:
+        node: MVNode
+    - High:
+        node: HVNode
+  - type: UserInterface
+    interfaces:
+      enum.DockingPowerSharerUiKey.Key:
+        type: DockingPowerSharerBoundUserInterface
+  - type: ActivatableUI
+    key: enum.DockingPowerSharerUiKey.Key
+    blockSpectators: true
+  - type: Tag
+    tags:
+    - ForceNoFixRotations

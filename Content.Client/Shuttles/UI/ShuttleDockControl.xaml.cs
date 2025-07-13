@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Client.Shuttles.Systems;
 using Content.Shared.Shuttles.BUIStates;
@@ -249,25 +250,31 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                     {
                         if (dock.GridDockedWith == null)
                         {
-                            var coordsOne = EntManager.GetCoordinates(_viewedState!.Coordinates);
-                            var coordsTwo = EntManager.GetCoordinates(dock.Coordinates);
-                            var mapOne = _xformSystem.ToMapCoordinates(coordsOne);
-                            var mapTwo = _xformSystem.ToMapCoordinates(coordsTwo);
+                            if (dock.DocksWith?.Contains(_viewedState?.DockType ?? "") ?? true)
+                            {
+                                var coordsOne = EntManager.GetCoordinates(_viewedState!.Coordinates);
+                                var coordsTwo = EntManager.GetCoordinates(dock.Coordinates);
+                                var mapOne = _xformSystem.ToMapCoordinates(coordsOne);
+                                var mapTwo = _xformSystem.ToMapCoordinates(coordsTwo);
 
-                            var rotA = _xformSystem.GetWorldRotation(coordsOne.EntityId) + _viewedState!.Angle;
-                            var rotB = _xformSystem.GetWorldRotation(coordsTwo.EntityId) + dock.Angle;
+                                var rotA = _xformSystem.GetWorldRotation(coordsOne.EntityId) + _viewedState!.Angle;
+                                var rotB = _xformSystem.GetWorldRotation(coordsTwo.EntityId) + dock.Angle;
 
-                            var distanceSq = (mapOne.Position - mapTwo.Position).LengthSquared();
+                                var distanceSq = (mapOne.Position - mapTwo.Position).LengthSquared();
 
-                            var inAlignment = _dockSystem.InAlignment(mapOne, rotA, mapTwo, rotB);
-                            var maxDockDistSq = SharedDockingSystem.DockRange * SharedDockingSystem.DockRange;
-                            var canDock = distanceSq < maxDockDistSq && inAlignment;
+                                var inAlignment = _dockSystem.InAlignment(mapOne, rotA, mapTwo, rotB);
+                                var maxDockDistSq = SharedDockingSystem.DockRange * SharedDockingSystem.DockRange;
+                                var canDock = distanceSq < maxDockDistSq && inAlignment;
 
-                            if (dockButton != null)
-                                dockButton.Disabled = !canDock || !canDockChange;
+                                if (dockButton != null)
+                                    dockButton.Disabled = !canDock || !canDockChange;
 
-                            var lineColor = inAlignment ? Color.Lime : Color.Red;
-                            handle.DrawDottedLine(viewedDockPos.Value, collisionCenter, lineColor, offset: lineOffset);
+                                var lineColor = inAlignment ? Color.Lime : Color.Red;
+                                handle.DrawDottedLine(viewedDockPos.Value,
+                                    collisionCenter,
+                                    lineColor,
+                                    offset: lineOffset);
+                            }
                         }
 
                         canDraw = true;

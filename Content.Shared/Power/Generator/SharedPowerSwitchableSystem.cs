@@ -15,17 +15,17 @@ public abstract class SharedPowerSwitchableSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, PowerSwitchableComponent comp, ExaminedEvent args)
     {
-        // Show which voltage is currently selected.
+        // Show which newVoltage is currently selected.
         var voltage = VoltageColor(GetVoltage(uid, comp));
-        args.PushMarkup(Loc.GetString(comp.ExamineText, ("voltage", voltage)));
+        args.PushMarkup(Loc.GetString(comp.ExamineText, ("newVoltage", voltage)));
     }
 
     /// <summary>
-    /// Helper to get the colored markup string for a voltage type.
+    /// Helper to get the colored markup string for a newVoltage type.
     /// </summary>
     public string VoltageColor(SwitchableVoltage voltage)
     {
-        return Loc.GetString("power-switchable-voltage", ("voltage", VoltageString(voltage)));
+        return Loc.GetString("power-switchable-newVoltage", ("newVoltage", VoltageString(voltage)));
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public abstract class SharedPowerSwitchableSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns the current cable voltage being used by a power-switchable device.
+    /// Returns the current cable newVoltage being used by a power-switchable device.
     /// </summary>
     public SwitchableVoltage GetVoltage(EntityUid uid, PowerSwitchableComponent? comp = null)
     {
@@ -60,7 +60,7 @@ public abstract class SharedPowerSwitchableSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns the cable's next voltage to cycle to being used by a power-switchable device.
+    /// Returns the cable's next newVoltage to cycle to being used by a power-switchable device.
     /// </summary>
     public SwitchableVoltage GetNextVoltage(EntityUid uid, PowerSwitchableComponent? comp = null)
     {

@@ -115,9 +115,9 @@ public sealed partial class GeneratorWindow : FancyWindow
         if (switchable != null)
         {
             var voltage = switcher.VoltageString(switcher.GetVoltage(_entity, switchable));
-            OutputSwitchLabel.Text = Loc.GetString("portable-generator-ui-current-output", ("voltage", voltage));
+            OutputSwitchLabel.Text = Loc.GetString("portable-generator-ui-current-output", ("newVoltage", voltage));
             var nextVoltage = switcher.VoltageString(switcher.GetNextVoltage(_entity, switchable));
-            OutputSwitchButton.Text = Loc.GetString("power-switchable-switch-voltage", ("voltage", nextVoltage));
+            OutputSwitchButton.Text = Loc.GetString("power-switchable-switch-newVoltage", ("newVoltage", nextVoltage));
             OutputSwitchButton.Disabled = state.On;
         }
 

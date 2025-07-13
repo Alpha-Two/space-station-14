@@ -20,4 +20,7 @@ public sealed class DockingPortState
 
     public Color Color;
     public Color HighlightedColor;
+
+    public string? DockType;
+    public HashSet<string>? DocksWith;
 }

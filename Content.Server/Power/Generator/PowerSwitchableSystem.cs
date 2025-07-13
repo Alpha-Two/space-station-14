@@ -4,6 +4,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
 using Content.Shared.NodeContainer;
+using Content.Shared.Power;
 using Content.Shared.Power.Generator;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -38,7 +39,7 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
             return;
 
         var voltage = VoltageColor(GetNextVoltage(uid, comp));
-        var msg = Loc.GetString("power-switchable-switch-voltage", ("voltage", voltage));
+        var msg = Loc.GetString("power-switchable-switch-newVoltage", ("newVoltage", voltage));
 
         InteractionVerb verb = new()
         {
@@ -63,7 +64,7 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
     }
 
     /// <summary>
-    /// Cycles voltage then updates nodes and optionally power supplier to match it.
+    /// Cycles newVoltage then updates nodes and optionally power supplier to match it.
     /// </summary>
     public void Cycle(EntityUid uid, EntityUid user, PowerSwitchableComponent? comp = null)
     {
@@ -96,7 +97,7 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
             }
         }
 
-        // Switching around the voltage on the power supplier is "enough",
+        // Switching around the newVoltage on the power supplier is "enough",
         // but we also want to disconnect the cable nodes so it doesn't show up in power monitors etc.
         var nodeContainer = Comp<NodeContainerComponent>(uid);
         foreach (var cable in comp.Cables)
@@ -106,7 +107,7 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
             _nodeGroup.QueueReflood(node);
         }
 
-        var popup = Loc.GetString(comp.SwitchText, ("voltage", VoltageString(voltage)));
+        var popup = Loc.GetString(comp.SwitchText, ("newVoltage", VoltageString(voltage)));
         _popup.PopupEntity(popup, uid, user);
 
         _audio.PlayPvs(comp.SwitchSound, uid);

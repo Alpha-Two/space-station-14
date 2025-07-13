@@ -30,14 +30,14 @@ public sealed partial class PowerSwitchableComponent : Component
 
     /// <summary>
     /// Locale id for text shown when examined.
-    /// It is given "voltage" as a colored voltage string.
+    /// It is given "newVoltage" as a colored newVoltage string.
     /// </summary>
     [DataField(required: true)]
     public string ExamineText = string.Empty;
 
     /// <summary>
     /// Locale id for the popup shown when switching voltages.
-    /// It is given "voltage" as a colored voltage string.
+    /// It is given "newVoltage" as a colored newVoltage string.
     /// </summary>
     [DataField(required: true)]
     public string SwitchText = string.Empty;
@@ -51,7 +51,7 @@ public sealed partial class PowerSwitchableComponent : Component
 }
 
 /// <summary>
-/// Cable voltage and node name for cycling.
+/// Cable newVoltage and node name for cycling.
 /// </summary>
 [DataDefinition]
 public sealed partial class PowerSwitchableCable
@@ -71,7 +71,7 @@ public sealed partial class PowerSwitchableCable
 }
 
 /// <summary>
-/// Cable voltage to cycle between.
+/// Cable newVoltage to cycle between.
 /// </summary>
 [Serializable, NetSerializable]
 public enum SwitchableVoltage : byte
