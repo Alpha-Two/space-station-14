@@ -49,7 +49,7 @@ public abstract class SharedPowerSwitchableSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns the current cable newVoltage being used by a power-switchable device.
+    /// Returns the current cable voltage being used by a power-switchable device.
     /// </summary>
     public SwitchableVoltage GetVoltage(EntityUid uid, PowerSwitchableComponent? comp = null)
     {
@@ -60,7 +60,7 @@ public abstract class SharedPowerSwitchableSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns the cable's next newVoltage to cycle to being used by a power-switchable device.
+    /// Returns the cable's next voltage to cycle to being used by a power-switchable device.
     /// </summary>
     public SwitchableVoltage GetNextVoltage(EntityUid uid, PowerSwitchableComponent? comp = null)
     {

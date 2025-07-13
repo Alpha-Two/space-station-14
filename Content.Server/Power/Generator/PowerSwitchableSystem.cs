@@ -39,7 +39,7 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
             return;
 
         var voltage = VoltageColor(GetNextVoltage(uid, comp));
-        var msg = Loc.GetString("power-switchable-switch-newVoltage", ("newVoltage", voltage));
+        var msg = Loc.GetString("power-switchable-switch-voltage", ("voltage", voltage));
 
         InteractionVerb verb = new()
         {
@@ -64,7 +64,7 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
     }
 
     /// <summary>
-    /// Cycles newVoltage then updates nodes and optionally power supplier to match it.
+    /// Cycles voltage then updates nodes and optionally power supplier to match it.
     /// </summary>
     public void Cycle(EntityUid uid, EntityUid user, PowerSwitchableComponent? comp = null)
     {
@@ -97,7 +97,7 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
             }
         }
 
-        // Switching around the newVoltage on the power supplier is "enough",
+        // Switching around the voltage on the power supplier is "enough",
         // but we also want to disconnect the cable nodes so it doesn't show up in power monitors etc.
         var nodeContainer = Comp<NodeContainerComponent>(uid);
         foreach (var cable in comp.Cables)

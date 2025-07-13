@@ -25,7 +25,7 @@ namespace Content.Server.Power.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public Voltage Voltage { get => _voltage; set => SetVoltage(value); }
-        [DataField("newVoltage")]
+        [DataField("voltage")]
         private Voltage _voltage = Voltage.High;
 
         [ViewVariables]
