@@ -312,6 +312,8 @@ namespace Content.Server.Shuttles.Systems
             {
                 DockA = dockA,
                 DockB = dockB,
+                DockingEntityA = dockAUid,
+                DockingEntityB = dockBUid,
                 GridAUid = gridA,
                 GridBUid = gridB,
             };

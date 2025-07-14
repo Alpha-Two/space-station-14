@@ -41,35 +41,37 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      HVNode:
+      HVInput:
         !type:CableDeviceNode
         nodeGroupID: HVPower
-      MVNode:
+      MVInput:
         !type:CableDeviceNode
         nodeGroupID: MVPower
-      LVNode:
-        !type:CableDeviceNode
-        nodeGroupID: Apc
+      HVDock:
+        !type:DockNode
+        nodeGroupID: HVPower
+      MVDock:
+        !type:DockNode
+        nodeGroupID: MVPower
   - type: BatteryCharger
     voltage: Medium
-    node: MVNode
+    node: MVPower
   - type: BatteryDischarger
     voltage: Medium
-    node: MVNode
+    node: MVDock
   - type: PowerNetworkBattery
-    maxSupply: 10000
+    maxSupply: 150000
     maxChargeRate: 5000
     supplyRampTolerance: 1000
     supplyRampRate: 500
   - type: ExaminableBattery
   - type: DockingPowerSharer
-    powerSharerTypes:
-    - Apc:
-        node: LVNode
-    - Medium:
-        node: MVNode
-    - High:
-        node: HVNode
+    validInputNodes:
+      - HVPower
+      - MVPower
+    validDockNodes:
+      - HVDock
+      - MVDock
   - type: UserInterface
     interfaces:
       enum.DockingPowerSharerUiKey.Key:

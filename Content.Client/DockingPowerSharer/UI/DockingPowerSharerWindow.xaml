@@ -3,9 +3,14 @@
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
 
     <BoxContainer Orientation="Vertical">
-        <Button Name="LVButton" Text="{Loc ui-power-sharer-lv}" />
-        <Button Name="MVButton" Text="{Loc ui-power-sharer-mv}" />
-        <Button Name="HVButton" Text="{Loc ui-power-sharer-hv}" />
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="MVDischargeButton" Text="{Loc ui-power-sharer-discharge}" />
+            <Button Name="HVDischargeButton" Text="{Loc ui-power-sharer-hv-discharge}" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="MVDrawButton" Text="{Loc ui-power-sharer-mv-draw}" />
+            <Button Name="HVDrawButton" Text="{Loc ui-power-sharer-hv-draw}" />
+        </BoxContainer>
     </BoxContainer>
 
 </controls:FancyWindow>

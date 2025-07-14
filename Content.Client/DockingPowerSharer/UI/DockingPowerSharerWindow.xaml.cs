@@ -12,11 +12,12 @@ public sealed partial class DockingPowerSharerWindow : FancyWindow
     public DockingPowerSharerWindow()
     {
         RobustXamlLoader.Load(this);
-        LVButton.OnPressed += _ => VoltageChanged?.Invoke(Voltage.Apc);
-        MVButton.OnPressed += _ => VoltageChanged?.Invoke(Voltage.Medium);
-        HVButton.OnPressed += _ => VoltageChanged?.Invoke(Voltage.High);
+        MVDischargeButton.OnPressed += _ => VoltageChanged?.Invoke(Voltage.Medium, true);
+        HVDischargeButton.OnPressed += _ => VoltageChanged?.Invoke(Voltage.High, true);
+        MVDrawButton.OnPressed += _ => VoltageChanged?.Invoke(Voltage.Medium, false);
+        HVDrawButton.OnPressed += _ => VoltageChanged?.Invoke(Voltage.High, false);
     }
 
-    public Action<Voltage>? VoltageChanged;
+    public Action<Voltage, bool>? VoltageChanged;
 }
 

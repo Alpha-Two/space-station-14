@@ -10,6 +10,9 @@ public sealed class DockEvent : EntityEventArgs
     public DockingComponent DockA = default!;
     public DockingComponent DockB = default!;
 
+    public EntityUid DockingEntityA = default!;
+    public EntityUid DockingEntityB = default!;
+
     public EntityUid GridAUid = default!;
     public EntityUid GridBUid = default!;
 }

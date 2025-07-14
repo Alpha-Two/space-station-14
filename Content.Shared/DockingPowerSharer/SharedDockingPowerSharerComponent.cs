@@ -10,8 +10,23 @@ namespace Content.Shared.DockingPowerSharer;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class DockingPowerSharerComponent : Component
 {
+    [DataField]
+    public Voltage CurrentVoltage = Voltage.Medium;
+
+    [DataField]
+    public bool IsDischarging = true;
+
     [ViewVariables]
-    public Voltage CurrentVoltage { get; set; }
+    public bool TransmittingPower = false;
+
+    [ViewVariables]
+    public EntityUid? TransmittingWith;
+
+    [DataField]
+    public HashSet<string> ValidInputNodes = new();
+
+    [DataField]
+    public HashSet<string> ValidOutputNodes = new();
 }
 
 [Serializable, NetSerializable]
@@ -21,7 +36,8 @@ public enum DockingPowerSharerUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class DockingPowerSharerVoltageChangeMessage(Voltage voltage) : BoundUserInterfaceMessage
+public sealed class DockingPowerSharerVoltageChangeMessage(Voltage voltage, bool isGoingOut) : BoundUserInterfaceMessage
 {
     public Voltage newVoltage = voltage;
+    public bool isGoingOut = isGoingOut;
 }

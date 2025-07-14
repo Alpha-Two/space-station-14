@@ -19,8 +19,8 @@ public sealed class DockingPowerSharerBoundUserInterface(EntityUid owner, Enum u
         Update();
     }
 
-    private void OnVoltageChanged(Voltage newVoltage)
+    private void OnVoltageChanged(Voltage newVoltage, bool isGoingOut)
     {
-        SendPredictedMessage(new DockingPowerSharerVoltageChangeMessage(newVoltage));
+        SendPredictedMessage(new DockingPowerSharerVoltageChangeMessage(newVoltage, isGoingOut));
     }
 }
