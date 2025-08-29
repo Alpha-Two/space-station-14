@@ -158,6 +158,9 @@ namespace Content.Shared.Chemistry.Reagent
         public List<EntityEffect> PlantMetabolisms = new(0);
 
         [DataField]
+        public FlammableData? Flammable = default!;
+
+        [DataField]
         public float PricePerUnit;
 
         [DataField]

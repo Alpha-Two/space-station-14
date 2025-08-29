@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.GroundFlammable;
 using Content.Shared.IgnitionSource;
 
 namespace Content.Server.IgnitionSource;
@@ -7,6 +8,7 @@ public sealed partial class IgnitionSourceSystem : SharedIgnitionSourceSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly GroundFlammableSystem _groundFlammable = default!;
 
     public override void Update(float frameTime)
     {
@@ -23,6 +25,7 @@ public sealed partial class IgnitionSourceSystem : SharedIgnitionSourceSystem
                 var position = _transform.GetGridOrMapTilePosition(uid, xform);
                 // TODO: Should this be happening every single tick?
                 _atmosphere.HotspotExpose(gridUid, position, comp.Temperature, 50, uid, true);
+                _groundFlammable.IgniteTile(gridUid, position, comp.Temperature, uid);
             }
         }
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -962,5 +963,59 @@ namespace Content.Shared.Chemistry.Components
             }
             return dict;
         }
+
+        #region Flammability
+
+        public Color GetSolutionFlameHue(IPrototypeManager protoMan)
+        {
+            var protoDict = GetReagentPrototypes(protoMan);
+            FixedPoint2 totalFlammableQuantity = 0;
+            FixedPoint2 runningHueAverage = 0;
+
+            foreach (var (reagentProto, quantity) in protoDict)
+            {
+                if (reagentProto.Flammable is not null)
+                {
+                    totalFlammableQuantity += quantity;
+                    runningHueAverage += quantity * reagentProto.Flammable.FlameHue;
+                }
+            }
+
+            FixedPoint2 hue = totalFlammableQuantity > 0 ? runningHueAverage / totalFlammableQuantity : 0;
+            return Color.FromHsl(new Vector4((float)hue, 1, 0.5f, 1));
+        }
+
+        public float GetSolutionTotalJoules(IPrototypeManager protoMan)
+        {
+            var protoDict = GetReagentPrototypes(protoMan);
+            var totalJoules = 0f;
+            foreach (var (reagentProto, quantity) in protoDict)
+            {
+                if (reagentProto.Flammable is not null)
+                {
+                    totalJoules += (float)quantity * reagentProto.Flammable.JoulesPerUnit;
+                }
+            }
+            return totalJoules;
+        }
+
+        public FixedPoint2 BurnJoules(IPrototypeManager protoMan, float joulesToBurn)
+        {
+            var startingVolume = Volume;
+            var fractionToBurn = joulesToBurn / GetSolutionTotalJoules(protoMan);
+
+            foreach (var reagentQuantity in Contents)
+            {
+                var reagentProto = protoMan.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+                if (reagentProto.Flammable is not null)
+                {
+                    RemoveReagent(reagentQuantity.Reagent, (FixedPoint2)(reagentQuantity.Quantity * fractionToBurn));
+                }
+            }
+
+            return startingVolume - Volume;
+        }
+
+        #endregion
     }
 }
