@@ -230,7 +230,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         // This message may have a radio prefix, and should then be whispered to the resolved radio channel
         if (checkRadioPrefix)
         {
-            if (TryProccessRadioMessage(source, message, out var modMessage, out var channel))
+            if (TryProccessRadioMessage(source, message, out var modMessage, out var channel) && !(channel is not null && TryComp<SupressRadioWhisperComponent>(source, out var supressComp) && supressComp.Channels.Contains(channel.ID)))
             {
                 SendEntityWhisper(source, modMessage, range, channel, nameOverride, hideLog, ignoreActionBlocker);
                 return;
